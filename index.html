@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Cloud Tail</title>
+</head>
+<body>
+	<div></div>
+	<div class="container">
+		<p id="out">
+		</p>
+	</div>
+	<div>
+		<button id="start" onclick="location.reload()">
+			Start getting data
+		</button>
+		<button id="stop" onclick="ws.close()">
+			Stop getting data
+		</button>
+	</div>
+</body>
+<script>
+	elem = document.getElementById("out");
+	const ws = new WebSocket("ws://localhost:8000/ws");     
+	ws.onopen = () => {
+		ws.send("open");
+	};
+
+	ws.onmessage = (event) => {
+		elem.innerHTML = event.data;
+		ws.send("keep going");
+	};
+
+</script>
+</html>
